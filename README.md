@@ -1,3 +1,3 @@
 # About
 
-Repository with varioius Docker samples.
+Repository with various Docker samples.
