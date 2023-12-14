@@ -31,17 +31,22 @@ print_and_wait "We should prefer using exact tags. As you can see above, pulling
 execute_command docker pull alpine:3.19.0
 
 print_and_wait "Pulling from another registry can be done by specifying its name as the part of the image name:"
-execute_command docker pull docker.elastic.co/beats/elastic-logging-plugin:7.6.1
+execute_command docker pull docker.elastic.co/apm/apm-server:8.6.0-arm64
 
 print_and_wait "We are able to create our own images but we should keep it simple and small"
 execute_command cat app/Dockerfile
 execute_command docker build -t myapp:0.1-alpha app
+echo
+
+print_and_wait "There is also a concept of multi-stage builds. There are multiple FROM instructions, each starting a new stage. In the end we can end up with much smaller image"
+execute_command cat multistage-app/Dockerfile
+execute_command docker build -t hello multistage-app
 
 print_and_wait "All and all we've ended up with these images in the end"
 execute_command docker images
 
 print_and_wait "Let's clean up"
 print_and_wait "Removing an image is just as simple. Notice that wherever we use a specific tag we must provide it for deletion. Also notice the registry name as well."
-execute_command docker rmi alpine alpine:3.19.0 docker.elastic.co/beats/elastic-logging-plugin:7.6.1
+execute_command docker rmi alpine alpine:3.19.0 docker.elastic.co/apm/apm-server:8.6.0-arm64
 print_and_wait "Alternative way:"
 execute_command docker image rm myapp:0.1-alpha
